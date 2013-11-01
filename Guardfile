@@ -4,7 +4,7 @@
 guard :minitest do
   # with Minitest::Spec
   watch(%r{^spec/lib/under_fire/(.*)_spec\.rb})
-  watch(%r{^lib/under_fire/(.+)\.rb})         { |m| "spec/lib/gracenote/#{m[1]}_spec.rb" }
+  watch(%r{^lib/under_fire/(.+)\.rb})         { |m| "spec/lib/under_fire/#{m[1]}_spec.rb" }
   watch(%r{^spec/spec_helper\.rb}) { 'spec' }
 
   # Rails 4
