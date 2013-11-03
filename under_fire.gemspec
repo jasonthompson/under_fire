@@ -26,8 +26,9 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rr"
   if RbConfig::CONFIG['target_os'] =~ /mswin|mingw|cygwi/
     spec.add_development_dependency "wdm", ">= 0.1.0"
-  end				    
+  end
 
   spec.add_runtime_dependency "ox"
   spec.add_runtime_dependency "builder"
+  spec.add_runtime_dependency "rest-client"
 end

@@ -1,7 +1,5 @@
 module UnderFire
   module Configuration
-    
-    
     def client_id
       ENV['GRACENOTE_CLIENT_ID']
     end
@@ -14,7 +12,7 @@ module UnderFire
     def user_id
       ENV['GRACENOTE_USER_ID']
     end
-    
+
     def user_id
       ENV['GRACENOTE_USER_ID']
     end

@@ -12,11 +12,11 @@ module UnderFire
     end
 
     it "has a client_id" do
-      @obj_with_configuration.client_id.must_equal "12345668"
+      Configuration.client_id.must_equal "12345668"
     end
 
     it "has a user_id" do
-      @obj_with_configuration.user_id.must_equal "1432145345-13413554646D35134"
+      Configuration.user_id.must_equal "1432145345-13413554646D35134"
     end
   end
 end
