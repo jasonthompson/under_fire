@@ -2,7 +2,7 @@ require 'under_fire/configuration'
 require 'builder'
 
 module UnderFire
-  class AlbumSearch
+  class Registration
     attr_reader :query
 
     def initialize
@@ -15,6 +15,7 @@ module UnderFire
         builder.query(cmd: 'REGISTER'){
         builder.client UnderFire::Configuration.client_id
         }
+      }
       xml
     end
   end
