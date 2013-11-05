@@ -28,7 +28,7 @@ Gem::Specification.new do |spec|
     spec.add_development_dependency "wdm", ">= 0.1.0"
   end
 
-  spec.add_runtime_dependency "ox"
   spec.add_runtime_dependency "builder"
-  spec.add_runtime_dependency "rest-client"
+  spec.add_runtime_dependency 'nokogiri'
+  spec.add_runtime_dependency "nori"
 end
