@@ -30,7 +30,7 @@ module Minitest
   class DocReporter < AbstractReporter
     include ANSI::Code
 
-    attr_reader :io, :options, :results, :errors
+    attr_reader :io, :options, :results
 
     attr_accessor :start_time, :total_time, :failures, :errors, :skips, :count
 
@@ -38,23 +38,27 @@ module Minitest
       @io = io
       @options = options
       @results = []
+      @errors = 0
+      @skips = 0
       self.count = 0
     end
 
     def start
-      
       self.start_time = Time.now
     end
 
     def record(result)
-      puts " #{result.class}"
-      if result.passed? 
-        puts ANSI.green {" #{result.name}"}
-      else
-        puts ANSI.red {" #{result.name}"}
+      puts format_header(result.class)
+      puts format_result(result)
+      puts
+
+      if result.error?
+        puts format_error_info(result)
+        puts
       end
-      puts ""
+
       self.count = self.count + 1
+
       results << result if not result.passed? or result.skipped?
     end
 
@@ -64,17 +68,64 @@ module Minitest
       aggregate = results.group_by { |r| r.failure.class }
       aggregate.default = [] # dumb. group_by should provide this
 
-      total_time = Time.now - start_time
       failures   = aggregate[Assertion].size
       errors     = aggregate[UnexpectedError].size
       skips      = aggregate[Skip].size
 
       puts
-      puts "#{error_summary(errors)} #{failure_summary(failures)}"
+      puts count_tests_run(count, total_time)
+      puts "#{error_summary(errors)} #{format_divider} \
+#{failure_summary(failures)} #{format_divider} \
+#{skips_summary(skips)}"
+      puts
     end
 
     private
-    
+
+    def total_time
+      Time.now - start_time
+    end
+
+    #formatters
+    def pad(str, amount = 2)
+      " " * amount + str
+    end
+
+    def format_error_info(result)
+      e = result.failure.exception
+      bt = Minitest.filter_backtrace e.backtrace
+      pad(ANSI.bold {e.class.to_s} + "\n" + pad(e.message.to_s) + "\n" + \
+          format_backtrace(bt))
+    end
+
+    def format_backtrace(bt)
+      output = ""
+      bt.each {|l| output << l}
+      pad output
+    end
+
+    def format_result(result)
+      output = ""
+      if result.passed? 
+        output =  ANSI.green {result.name}
+      else
+        output = ANSI.red {result.name}
+      end
+      pad output
+    end
+
+    def format_header(header)
+      ANSI.bold(header)
+    end
+
+    def count_tests_run(count, total_time)
+      ANSI.bold "#{count} tests run in #{total_time}"
+    end
+
+    def skips_summary(count)
+      ANSI.bold "Skips: #{skips}"
+    end
+
     def error_summary(count)
       summary = ANSI.bold + "Errors: #{count}"
       if count.zero?
@@ -91,6 +142,10 @@ module Minitest
       else
         return ANSI.red + summary
       end
+    end
+
+    def format_divider(divider = '|')
+      ANSI.white + ANSI.bold + divider
     end
   end
 end
