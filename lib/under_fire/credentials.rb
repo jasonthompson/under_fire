@@ -1,4 +1,0 @@
-module UnderFire
-  CLIENT_ID = ENV['GRACENOTE_CLIENT_ID']
-  USER_ID = ENV['GRACENOTE_USER_ID']
-end

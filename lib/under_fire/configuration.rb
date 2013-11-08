@@ -14,7 +14,6 @@ module UnderFire
       ct
     end
 
-
     def user_id
       ENV['GRACENOTE_USER_ID']
     end
