@@ -15,6 +15,7 @@ module UnderFire
         builder.query(cmd: 'REGISTER'){
         builder.client UnderFire::Configuration.client_id
         }
+      }
       xml
     end
   end
