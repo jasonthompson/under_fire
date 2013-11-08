@@ -32,15 +32,17 @@ module Minitest
 
     attr_reader :io, :options, :results
 
-    attr_accessor :start_time, :total_time, :failures, :errors, :skips, :count
+    attr_accessor :start_time, :total_time, :failures, :errors, :skips, :count, 
+      :results
 
     def initialize(io = $stdout, options = {})
       @io = io
       @options = options
-      @results = []
-      @errors = 0
-      @skips = 0
+      self.results = []
+      self.errors = 0
+      self.skips = 0
       self.count = 0
+      self.failures = 0
     end
 
     def start
@@ -57,30 +59,39 @@ module Minitest
         puts
       end
 
-      self.count = self.count + 1
+      if result.failure
+        puts pad(result.failure.to_s)
+        puts
+      end
 
-      results << result if not result.passed? or result.skipped?
+      self.count += 1
+
+      self.results << result if not result.passed? or result.skipped?
     end
 
     def report
       super
 
-      aggregate = results.group_by { |r| r.failure.class }
+      aggregate = self.results.group_by { |r| r.failure.class }
       aggregate.default = [] # dumb. group_by should provide this
 
-      failures   = aggregate[Assertion].size
-      errors     = aggregate[UnexpectedError].size
-      skips      = aggregate[Skip].size
+      self.failures   = aggregate[Assertion].size
+      self.errors     = aggregate[UnexpectedError].size
+      self.skips      = aggregate[Skip].size
 
       puts
-      puts count_tests_run(count, total_time)
-      puts "#{error_summary(errors)} #{format_divider} \
-#{failure_summary(failures)} #{format_divider} \
-#{skips_summary(skips)}"
+      puts format_tests_run_count(count, total_time)
+      puts statistics
       puts
     end
 
     private
+
+    def statistics
+      "#{format_result_type('Errors', errors, :red)} #{format_divider}" + \
+      "#{format_result_type('Failures', failures, :red)} #{format_divider}" + \
+      "#{format_result_type('Skips', skips, :yellow)}"
+    end
 
     def total_time
       Time.now - start_time
@@ -118,34 +129,22 @@ module Minitest
       ANSI.bold(header)
     end
 
-    def count_tests_run(count, total_time)
+    def format_tests_run_count(count, total_time)
       ANSI.bold "#{count} tests run in #{total_time}"
     end
 
-    def skips_summary(count)
-      ANSI.bold "Skips: #{skips}"
-    end
+    def format_result_type(type, count, colour)
+      summary = "#{type}: #{count}"
 
-    def error_summary(count)
-      summary = ANSI.bold + "Errors: #{count}"
       if count.zero?
-        return ANSI.white + summary
+        return ANSI.ansi(summary, :white, :bold)
       else
-        return ANSI.red + summary
-      end
-    end
-
-    def failure_summary(count)
-      summary = "Failures: #{count}"
-      if count.zero?
-        return ANSI.white + summary
-      else
-        return ANSI.red + summary
+        return ANSI.ansi(summary, colour, :bold)
       end
     end
 
     def format_divider(divider = '|')
-      ANSI.white + ANSI.bold + divider
+      ANSI.white + ANSI.bold + " #{divider} "
     end
   end
 end

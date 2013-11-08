@@ -4,7 +4,7 @@ require 'builder'
 module UnderFire
   class AlbumSearch
     attr_accessor :artist, :track_title, :album_title, :album_toc, :query
-    
+
     def initialize(args={})
       args.each do |k,v| send("#{k}=", v) end
       @query = build_query
