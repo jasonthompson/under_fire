@@ -1,4 +1,4 @@
-brequire 'under_fire/configuration'
+require 'under_fire/configuration'
 require 'builder'
 
 module UnderFire
