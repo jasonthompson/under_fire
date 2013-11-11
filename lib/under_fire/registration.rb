@@ -2,7 +2,7 @@ require 'under_fire/configuration'
 require 'builder'
 
 module UnderFire
-  class AlbumSearch
+  class Registration
     attr_reader :query
 
     def initialize
