@@ -20,6 +20,7 @@ module UnderFire
         builder.lang "eng"
         builder.country "canada"
         builder.query(cmd: "ALBUM_TOC"){
+          builder.mode "SINGLE_BEST_COVER"
           builder.toc {
             builder.offsets toc
           }

@@ -12,6 +12,7 @@ module UnderFire
       '<user>2353452345243545-454351435kj435j345434</user></auth>'+
       '<lang>eng</lang><country>canada</country>'+
       '<query cmd="ALBUM_TOC">'+
+      '<mode>SINGLE_BEST_COVER</mode>'+
       '<toc><offsets>' + toc + '</offsets></toc>'+
       '</query></queries>'
     }
@@ -27,7 +28,7 @@ module UnderFire
       end
 
 
-    describe "#query with all fields" do
+    describe "#query" do
       it "returns the correct xml query" do
         subject.query.must_equal xml
       end

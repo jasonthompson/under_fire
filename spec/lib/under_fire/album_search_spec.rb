@@ -12,6 +12,7 @@ module UnderFire
       '<user>2353452345243545-454351435kj435j345434</user></auth>'+
       '<lang>eng</lang><country>canada</country>'+
       '<query cmd="ALBUM_SEARCH">'+
+      '<mode>SINGLE_BEST_COVER</mode>'+
       '<text type="ALBUM_TITLE">OK Computer</text>'+
       '<text type="TRACK_TITLE">Paranoid Android</text>'+
       '<text type="ARTIST">Radiohead</text>'+
@@ -30,7 +31,19 @@ module UnderFire
 
     describe "#query with all fields" do
       it "returns the correct xml query" do
-        subject.query.must_equal xml
+        subject.query.must_include "Radiohead"
+      end
+    end
+
+    describe "#query with artist" do
+      subject{AlbumSearch.new(artist: "Radiohead")}
+      it "returns an xml query with an artist name" do
+        subject.query.must_include "Radiohead"
+      end
+
+      it "does not return album_title or track_title fields" do
+        subject.query.wont_include "TRACK_TITLE"
+        subject.query.wont_include "ALBUM_TITLE"
       end
     end
   end

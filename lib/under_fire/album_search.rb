@@ -3,9 +3,10 @@ require 'builder'
 
 module UnderFire
   class AlbumSearch
-    attr_accessor :artist, :track_title, :album_title, :album_toc, :query
+    attr_accessor :artist, :track_title, :album_title, :query, :parameters
 
     def initialize(args={})
+      @parameters = args
       args.each do |k,v| send("#{k}=", v) end
       @query = build_query
     end
@@ -20,9 +21,10 @@ module UnderFire
         builder.lang "eng"
         builder.country "canada"
         builder.query(cmd: "ALBUM_SEARCH"){
-          builder.text(album_title, type: "ALBUM_TITLE")
-          builder.text(track_title, type: "TRACK_TITLE")
-          builder.text(artist, type: "ARTIST")
+          builder.mode "SINGLE_BEST_COVER"
+          parameters.each do |k,v|
+            builder.text(v, type: k.to_s.upcase)
+          end
           }
         }
       xml
