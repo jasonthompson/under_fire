@@ -9,7 +9,7 @@ module UnderFire
 
     describe "#parse_response" do
       it "returns a Hash" do
-        subject.response.must_be_kind_of Hash
+        subject.to_h.must_be_kind_of Hash
       end
     end
   end

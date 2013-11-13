@@ -31,6 +31,7 @@ Gem::Specification.new do |spec|
   end
 
   spec.add_runtime_dependency "builder"
-  spec.add_runtime_dependency 'nokogiri'
+  spec.add_runtime_dependency "nokogiri"
   spec.add_runtime_dependency "nori"
+  spec.add_runtime_dependency "slop"
 end
