@@ -11,8 +11,8 @@ module UnderFire
     parse_discid_output
   end
 
-  def album_search(opts)
-    as = AlbumSearch.new(opts)
+  def album_search(params)
+    as = AlbumSearch.new(params)
     req = ApiRequest.post(as.query)
     res = ApiResponse.new(req.body)
     puts res.to_h
@@ -30,5 +30,5 @@ module UnderFire
     puts output
   end
 
-  module_function :get_album_toc, :album_search
+  module_function :get_album_toc, :album_search, :album_toc_search, :parse_discid_output
 end
