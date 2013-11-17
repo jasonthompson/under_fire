@@ -63,7 +63,7 @@ module UnderFire
 
     command 'toc' do
       run do
-        puts UnderFire.album_toc_search
+        UnderFire.album_toc_search.to_s
       end
     end
   end

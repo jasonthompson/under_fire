@@ -7,21 +7,16 @@ require 'under_fire/api_response'
 require 'under_fire/album_toc_search'
 
 module UnderFire
-  # def get_album_toc
-  #   parse_discid_output
-  # end
-
   def album_search(params)
     as = AlbumSearch.new(params)
     req = ApiRequest.post(as.query)
     res = ApiResponse.new(req.body)
-    puts res.to_h
   end
 
   def album_toc_search
     as = AlbumTocSearch.new(get_toc)
     res = ApiRequest.post(as.query)
-    ApiResponse.new(res.body).to_h
+    ApiResponse.new(res.body)
   end
 
   def get_toc(discid=`discid`)
