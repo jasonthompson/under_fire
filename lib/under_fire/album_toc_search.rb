@@ -3,16 +3,19 @@ require 'builder'
 
 module UnderFire
   class AlbumTocSearch
-    attr_accessor :toc, :query
+    attr_accessor :toc
 
     def initialize(toc)
       @toc = toc
-      @query = build_query
+    end
+
+    def query
+      build_query
     end
 
     def build_query
       builder = Builder::XmlMarkup.new
-      xml = builder.queries {
+      builder.queries {
         builder.auth {
           builder.client UnderFire::Configuration.client_id
           builder.user UnderFire::Configuration.user_id
@@ -26,7 +29,6 @@ module UnderFire
           }
         }
       }
-      xml
     end
   end
 end

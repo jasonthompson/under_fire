@@ -4,7 +4,7 @@ require 'rr'
 module UnderFire
   describe AlbumTocSearch do
     let(:toc){"182 10762 22515 32372 43735 53335 63867 78305 89792 98702"+
-        "110612 122590 132127 141685 2063"}
+        "110612 122590 132127 141685"}
     subject {AlbumTocSearch.new(toc)}
 
     let(:xml){

@@ -7,9 +7,9 @@ require 'under_fire/api_response'
 require 'under_fire/album_toc_search'
 
 module UnderFire
-  def get_album_toc
-    parse_discid_output
-  end
+  # def get_album_toc
+  #   parse_discid_output
+  # end
 
   def album_search(params)
     as = AlbumSearch.new(params)
@@ -18,17 +18,15 @@ module UnderFire
     puts res.to_h
   end
 
-  def album_toc_search(toc)
-    as = AlbumTocSearch.new(toc)
-    req = ApiRequest.post(as.query)
-    res = ApiResponse.new(req.body)
-    puts res.to_h
-  end
-  
-  def parse_discid_output(discid=`discid`)
-    output = discid.split[2..-2].join " "
-    puts output
+  def album_toc_search
+    as = AlbumTocSearch.new(get_toc)
+    res = ApiRequest.post(as.query)
+    ApiResponse.new(res.body).to_h
   end
 
-  module_function :get_album_toc, :album_search, :album_toc_search, :parse_discid_output
+  def get_toc(discid=`discid`)
+    discid.split[2..-2].join " "
+  end
+
+  module_function :album_search, :album_toc_search, :get_toc
 end
