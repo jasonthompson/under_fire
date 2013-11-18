@@ -6,9 +6,6 @@ require 'pry'
 extend UnderFire
 
 module UnderFire
-  def present?(param, opts)
-     !opts[param].nil? && !opts[param].empty?
-  end
 
   commands_list = %Q(COMMANDS:
             album: Search for an album using artist, album title or track title.
@@ -24,8 +21,6 @@ module UnderFire
                         [-t, --album_title] [-s, --song_title]\n\n)
 
   opts = Slop.parse(strict: true) do
-    banner 'Usage: under-fire'
-
     if ARGV.empty?
       puts " under-fire expects an option or a command: \n\n #{help_message}"
     end
@@ -48,16 +43,14 @@ module UnderFire
       end
 
       run do |opts|
-        params = {}
-        params[:album_title] = opts[:album_title] if present? :album_title, opts
-        params[:tack_title] = opts[:track_title] if present? :track_title, opts
-        params[:artist] = opts[:artist] if present? :artist, opts
+        params = opts.to_h.reject {|k,v| v.nil?}
 
         if params.empty?
-          puts "Album requires at least one argument.\n" + album_help_message
-          exit
-        end
-        UnderFire.album_search(params)
+           puts "\n'under-fire album' requires at least one argument.\n\n" +
+             help_message
+           exit
+         end
+        UnderFire.album_search(params).to_s
       end
     end
 

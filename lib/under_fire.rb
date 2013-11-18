@@ -10,7 +10,7 @@ module UnderFire
   def album_search(params)
     as = AlbumSearch.new(params)
     req = ApiRequest.post(as.query)
-    res = ApiResponse.new(req.body)
+    ApiResponse.new(req.body)
   end
 
   def album_toc_search
