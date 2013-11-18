@@ -1,3 +1,2 @@
--commandline toc search -> only taking first element of discid output
-Possible solution: do my own command line parsing. Too many issues with slop for
-my use case and commandline parsing isn't that hard.
+-album cover request
+-add mode choice to album search?
