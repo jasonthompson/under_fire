@@ -16,5 +16,15 @@ module UnderFire
       res = http.request(req)
       res
     end
+
+    def self.get_file(url, filename)
+      require 'open-uri'
+
+      File.open(filename, "wb") do |saved_file|
+        open(url, 'rb') do |read_file|
+          saved_file.write(read_file.read)
+        end
+      end
+    end
   end
 end

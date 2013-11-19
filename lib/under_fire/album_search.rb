@@ -3,10 +3,11 @@ require 'builder'
 
 module UnderFire
   class AlbumSearch
-    attr_accessor :artist, :track_title, :album_title, :query, :parameters
+    attr_accessor :artist, :track_title, :album_title, :query, :parameters, 
+      :mode
 
     def initialize(args={})
-      @parameters = args
+      @parameters = args.reject {|k,v| k == :mode}
       args.each do |k,v| send("#{k}=", v) end
       @query = build_query
     end
@@ -21,7 +22,7 @@ module UnderFire
         builder.lang "eng"
         builder.country "canada"
         builder.query(cmd: "ALBUM_SEARCH"){
-          builder.mode "SINGLE_BEST_COVER"
+          builder.mode mode
           parameters.each do |k,v|
             builder.text(v, type: k.to_s.upcase)
           end

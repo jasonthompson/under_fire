@@ -17,8 +17,9 @@ module UnderFire
                    List available commands: under-fire -l
                    Get help for a command: under-fire <command> [-h, --help]\n\n)
 
-  album_help_message = %Q(usage: under-fire album [-a, --artist] 
-                        [-t, --album_title] [-s, --song_title]\n\n)
+  album_help_message = %Q(usage: under-fire album [-a, --artist]
+                        [-t, --album_title] [-s, --song_title]
+                        [-m, --mode [SINGLE_BEST | SINGLE_BEST_COVER]]\n\n)
 
   opts = Slop.parse(strict: true) do
     if ARGV.empty?
@@ -37,6 +38,8 @@ module UnderFire
       on :t, :album_title, "Album title", argument: :optional
       on :a, :artist, "Artist name", argument: :optional
       on :s, :track_title, "Song/track title", argument: :optional
+      on :m, :mode, "Search mode", argument: :optional
+
       on :h, :help, "Print help message" do
         puts album_help_message
         exit
@@ -57,6 +60,12 @@ module UnderFire
     command 'toc' do
       run do
         UnderFire.album_toc_search.to_s
+      end
+    end
+
+    command 'cover' do
+      run do
+        UnderFire.album_cover_request
       end
     end
   end

@@ -7,17 +7,6 @@ module UnderFire
     subject {AlbumSearch.new(artist: "Radiohead",
                              track_title: "Paranoid Android",
                              album_title: "OK Computer")}
-    let(:xml){
-      '<queries><auth><client>1234454</client>'+
-      '<user>2353452345243545-454351435kj435j345434</user></auth>'+
-      '<lang>eng</lang><country>canada</country>'+
-      '<query cmd="ALBUM_SEARCH">'+
-      '<mode>SINGLE_BEST_COVER</mode>'+
-      '<text type="ALBUM_TITLE">OK Computer</text>'+
-      '<text type="TRACK_TITLE">Paranoid Android</text>'+
-      '<text type="ARTIST">Radiohead</text>'+
-      '</query></queries>'
-    }
 
     before do
           ENV['GRACENOTE_CLIENT_ID'] = '1234454'
@@ -35,6 +24,12 @@ module UnderFire
       end
     end
 
+    describe "#mode" do
+      it "accepts a search mode on instantiation" do
+        AlbumSearch.new(artist: "Radiohead", mode: "FOO").mode.must_equal "FOO"
+      end
+    end
+      
     describe "#query with artist" do
       subject{AlbumSearch.new(artist: "Radiohead")}
       it "returns an xml query with an artist name" do
