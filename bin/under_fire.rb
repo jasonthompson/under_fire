@@ -6,7 +6,6 @@ require 'pry'
 extend UnderFire
 
 module UnderFire
-
   commands_list = %Q(COMMANDS:
             album: Search for an album using artist, album title or track title.
             toc:   Use CD table of contents to find album information.)

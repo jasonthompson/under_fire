@@ -9,7 +9,7 @@ module UnderFire
     end
 
     def to_h
-      response['RESPONSES']
+      response['RESPONSES']['RESPONSE']
     end
 
     ##
