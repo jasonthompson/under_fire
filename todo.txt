@@ -1,2 +1,1 @@
--album cover request
--add mode choice to album search?
+-mv cli logic to cli class
