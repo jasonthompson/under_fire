@@ -19,19 +19,22 @@ module UnderFire
       recursive_each(to_h)
     end
 
-    private
+
 
     def recursive_each(hash)
+      output = ""
       hash.each do |k,v|
         if v.is_a? Hash
-          puts "#{k}: "
-          recursive_each(v)
+          output << "\n"
+          output << "#{k}:\n#{recursive_each(v)}\n"
         elsif v.is_a? Array
-          v.each {|i| recursive_each(i)}
+          output << "\n"
+          v.each {|i| output << "#{recursive_each(i)}\n" }
         else
-          puts "#{k}: #{v}"
+          output << "#{k}: #{v}\n"
         end
       end
+      output
     end
 
     def parse_response(response)
