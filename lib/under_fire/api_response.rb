@@ -19,7 +19,11 @@ module UnderFire
       recursive_each(to_h)
     end
 
+    def success?
+      response['RESPONSES']['RESPONSE']['@STATUS'] == 'OK'
+    end
 
+    private 
 
     def recursive_each(hash)
       output = ""

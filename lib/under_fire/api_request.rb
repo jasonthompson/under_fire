@@ -4,8 +4,8 @@ require 'uri'
 
 module UnderFire
   class ApiRequest
-    def self.post(query)
-      uri = URI(UnderFire::Configuration.api_url)
+    def self.post(query, api_url)
+      uri = URI(api_url)
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
       http.ssl_version = 'SSLv3'
