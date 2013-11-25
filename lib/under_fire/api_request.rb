@@ -1,6 +1,7 @@
 require 'net/http'
 require 'net/https'
 require 'uri'
+require 'open-uri'
 
 module UnderFire
   class ApiRequest
@@ -14,7 +15,23 @@ module UnderFire
       req.body = query
       req['Content-Type'] = 'application/xml'
       res = http.request(req)
-      res
+      res 
+    end
+
+    def self.get_file(url, filename)
+      uri = URI url
+
+      Net::HTTP.start(uri.host, uri.port) do |http|
+        request = Net::HTTP::Get.new uri
+        
+        http.request request do |response|
+          open filename, 'w' do |io|
+            response.read_body do |chunk|
+              io.write chunk
+            end
+          end
+        end
+      end
     end
   end
 end

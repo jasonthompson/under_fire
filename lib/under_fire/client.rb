@@ -4,6 +4,8 @@ require 'under_fire/api_request'
 require 'under_fire/api_response'
 require 'under_fire/configuration'
 
+require 'pry'
+
 module UnderFire
   class Client
     include UnderFire
@@ -11,21 +13,26 @@ module UnderFire
     attr_reader :api_url
 
     def initialize
-      @user_id = Configuration.user_id
-      @client_id = Configuration.client_id
       @api_url = Configuration.api_url
     end
 
-    def toc_search
+    def find_by_toc
       search = AlbumTocSearch.new(get_toc)
       response = ApiRequest.post(search.query, api_url)
       ApiResponse.new(response.body)
     end
 
-    def album_search(args)
+    def find_album(args)
       search = AlbumSearch.new(args)
       response = ApiRequest.post(search.query, api_url)
       ApiResponse.new(response.body)
+    end
+
+    def fetch_cover(response)
+      res = response.to_h
+      response_url = res['RESPONSE']['ALBUM']['URL']
+      title = res['RESPONSE']['ALBUM']['TITLE']
+      ApiRequest.get_file(response_url, "#{title}-cover.jpeg")
     end
 
     private
