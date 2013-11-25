@@ -2,7 +2,7 @@ require 'under_fire/configuration'
 require 'builder'
 
 module UnderFire
-  class AlbumTocSearch
+  class AlbumTOCSearch
     attr_accessor :toc
 
     def initialize(toc)

@@ -2,10 +2,10 @@ require_relative '../../spec_helper.rb'
 require 'rr'
 
 module UnderFire
-  describe AlbumTocSearch do
+  describe AlbumTOCSearch do
     let(:toc){"182 10762 22515 32372 43735 53335 63867 78305 89792 98702"+
         "110612 122590 132127 141685"}
-    subject {AlbumTocSearch.new(toc)}
+    subject {AlbumTOCSearch.new(toc)}
 
     let(:xml){
       '<queries><auth><client>1234454</client>'+

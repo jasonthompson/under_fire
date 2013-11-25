@@ -1,7 +1,7 @@
 require 'nori'
 
 module UnderFire
-  class ApiResponse
+  class APIResponse
     attr_reader :response
 
     def initialize(response)
