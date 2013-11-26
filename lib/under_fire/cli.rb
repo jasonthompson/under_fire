@@ -3,6 +3,7 @@ require 'under_fire/api_request'
 require 'under_fire/api_response'
 require 'under_fire/album_toc_search'
 require 'under_fire/album_search'
+require 'under_fire/toc_reader'
 
 module UnderFire
   class CLI < Thor
@@ -15,9 +16,9 @@ module UnderFire
     desc  "toc", "Uses `discid` to get a CD's table of contents and then " +
       "uses the TOC to query Gracenote for album information."
     def toc
-      as = AlbumTocSearch.new(get_toc)
-      res = ApiRequest.post(as.query, Configuration.api_url)
-      say ApiResponse.new(res.body).to_s
+      as = AlbumTOCSearch.new(TOCReader.read)
+      res = APIRequest.post(as.query, Configuration.api_url)
+      say APIResponse.new(res.body).to_s
     end
 
     desc "album", "Queries Gracenote with album <title>, <song> title, or <artist> name"
@@ -26,8 +27,8 @@ module UnderFire
     method_option :artist, :aliases => '-a', :desc => "Specify artist name", :required => false
     def album
       search = AlbumSearch.new(options)
-      request = ApiRequest.post(search.query, Configuration.api_url)
-      say ApiResponse.new(request.body).to_s
+      request = APIRequest.post(search.query, Configuration.api_url)
+      say APIResponse.new(request.body).to_s
     end
 
     desc "cover", "Gets cover from Gracenote."
@@ -39,7 +40,7 @@ module UnderFire
       say "Fetching cover"
       url = options[:url]
       file_name = options[:file_name].empty? ? "cover.jpg" : options[:file_name]
-      ApiRequest.get_file(url, file_name)
+      APIRequest.get_file(url, file_name)
       say "saved #{file_name} in #{File.dirname __FILE__}"
     end
   end

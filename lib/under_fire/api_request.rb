@@ -4,7 +4,7 @@ require 'uri'
 require 'open-uri'
 
 module UnderFire
-  class ApiRequest
+  class APIRequest
     def self.post(query, api_url)
       uri = URI(api_url)
       http = Net::HTTP.new(uri.host, uri.port)
