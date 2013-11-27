@@ -8,21 +8,4 @@ require 'under_fire/album_toc_search'
 require 'under_fire/cli'
 
 module UnderFire
-  def album_search(params)
-    as = AlbumSearch.new(params)
-    req = ApiRequest.post(as.query)
-    ApiResponse.new(req.body)
-  end
-
-  def album_toc_search
-    as = AlbumTocSearch.new(get_toc)
-    res = ApiRequest.post(as.query)
-    ApiResponse.new(res.body)
-  end
-
-  def get_toc(discid=`discid`)
-    discid.split[2..-2].join " "
-  end
-
-  module_function :album_search, :album_toc_search, :get_toc
 end

@@ -27,8 +27,9 @@ module UnderFire
     method_option :artist, :aliases => '-a', :desc => "Specify artist name", :required => false
     def album
       search = AlbumSearch.new(options)
-      request = APIRequest.post(search.query, Configuration.api_url)
-      say APIResponse.new(request.body).to_s
+      puts search.query
+      # request = APIRequest.post(search.query, Configuration.api_url)
+      # say APIResponse.new(request.body).to_s
     end
 
     desc "cover", "Gets cover from Gracenote."

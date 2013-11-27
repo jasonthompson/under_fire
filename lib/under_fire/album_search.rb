@@ -1,8 +1,8 @@
-require 'under_fire/configuration'
+require 'under_fire/base_query'
 require 'builder'
 
 module UnderFire
-  class AlbumSearch
+  class AlbumSearch < BaseQuery
     attr_accessor :artist, :track_title, :album_title, :query, :parameters
 
     def initialize(args={})
@@ -12,21 +12,13 @@ module UnderFire
     end
 
     def build_query
-      builder = Builder::XmlMarkup.new
-      xml = builder.queries {
-        builder.auth {
-          builder.client UnderFire::Configuration.client_id
-          builder.user UnderFire::Configuration.user_id
-          }
-        builder.lang "eng"
-        builder.country "canada"
-        builder.query(cmd: "ALBUM_SEARCH"){
-          builder.mode "SINGLE_BEST_COVER"
-          parameters.each do |k,v|
-            builder.text(v, type: k.to_s.upcase)
-          end
-          }
-        }
+      builder = build_base_query
+      xml = builder.query(cmd: "ALBUM_SEARCH"){
+        builder.mode "SINGLE_BEST_COVER"
+        parameters.each do |k,v|
+          builder.text(v, type: k.to_s.upcase)
+        end
+      }
       xml
     end
   end

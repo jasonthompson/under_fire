@@ -1,20 +1,17 @@
-require 'under_fire/configuration'
+require 'under_fire/base_query'
 require 'builder'
 
 module UnderFire
-  class AlbumTOCSearch
-    attr_accessor :toc
+  class AlbumTOCSearch < BaseQuery
+    attr_accessor :toc, :query
 
     def initialize(toc)
       @toc = toc
-    end
-
-    def query
-      build_query
+      @query = build_query
     end
 
     def build_query
-      builder = Builder::XmlMarkup.new
+      builder = build_base_query
       builder.queries {
         builder.auth {
           builder.client UnderFire::Configuration.client_id
