@@ -16,16 +16,6 @@ module UnderFire
     # String output for command line use.
     # Haven't decided how to format output.
     def to_s
-      recursive_each(to_h)
-    end
-
-    def success?
-      response['RESPONSES']['RESPONSE']['@STATUS'] == 'OK'
-    end
-
-    private 
-
-    def recursive_each(hash)
       output = ""
       hash.each do |k,v|
         if v.is_a? Hash
@@ -40,6 +30,12 @@ module UnderFire
       end
       output
     end
+
+    def success?
+      response['RESPONSES']['RESPONSE']['@STATUS'] == 'OK'
+    end
+
+    private 
 
     def parse_response(response)
       parser = Nori.new
