@@ -22,14 +22,22 @@ module UnderFire
     end
 
     desc "album", "Queries Gracenote with album <title>, <song> title, or <artist> name"
-    method_option :album_title, :aliases => '-t', :desc => "Specify album title",  :required => false
-    method_option :song_title, :aliases => '-s', :desc => "Specify song title", :required => false
-    method_option :artist, :aliases => '-a', :desc => "Specify artist name", :required => false
+    method_option :album_title,
+      :aliases => '-t',
+      :desc => "Specify album title",
+      :required => false
+    method_option :song_title,
+      :aliases => '-s',
+      :desc => "Specify song title",
+      :required => false
+    method_option :artist,
+      :aliases => '-a',
+      :desc => "Specify artist name",
+      :required => false
     def album
       search = AlbumSearch.new(options)
-      puts search.query
-      # request = APIRequest.post(search.query, Configuration.api_url)
-      # say APIResponse.new(request.body).to_s
+      request = APIRequest.post(search.query, Configuration.api_url)
+      say APIResponse.new(request.body).to_s
     end
 
     desc "cover", "Gets cover from Gracenote."

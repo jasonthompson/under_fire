@@ -16,19 +16,7 @@ module UnderFire
     # String output for command line use.
     # Haven't decided how to format output.
     def to_s
-      output = ""
-      hash.each do |k,v|
-        if v.is_a? Hash
-          output << "\n"
-          output << "#{k}:\n#{recursive_each(v)}\n"
-        elsif v.is_a? Array
-          output << "\n"
-          v.each {|i| output << "#{recursive_each(i)}\n" }
-        else
-          output << "#{k}: #{v}\n"
-        end
-      end
-      output
+      recursive_to_s(to_h)
     end
 
     def success?
@@ -37,6 +25,21 @@ module UnderFire
 
     private 
 
+    def recursive_to_s(hash)
+      output = ""
+      hash.each do |k,v|
+        if v.is_a? Hash
+          output << "\n"
+          output << "#{k}:\n#{recursive_to_s(v)}\n"
+        elsif v.is_a? Array
+          output << "\n"
+          v.each {|i| output << "#{recursive_to_s(i)}\n" }
+        else
+          output << "#{k}: #{v}\n"
+        end
+      end
+      output
+    end
     def parse_response(response)
       parser = Nori.new
       parser.parse(response)

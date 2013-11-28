@@ -12,14 +12,14 @@ module UnderFire
     end
 
     def build_query
-      builder = build_base_query
-      xml = builder.query(cmd: "ALBUM_SEARCH"){
-        builder.mode "SINGLE_BEST_COVER"
-        parameters.each do |k,v|
-          builder.text(v, type: k.to_s.upcase)
-        end
-      }
-      xml
+      build_base_query do |builder|
+        builder.query(cmd: "ALBUM_SEARCH"){
+          builder.mode "SINGLE_BEST_COVER"
+          parameters.each do |k,v|
+            builder.text(v, type: k.to_s.upcase)
+          end
+        }
+      end
     end
   end
 end

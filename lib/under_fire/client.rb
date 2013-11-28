@@ -36,7 +36,7 @@ module UnderFire
       APIRequest.get_file(response_url, "#{title}-cover.jpeg")
     end
 
-#    private
+    private
 
     def get_toc
       TOCReader.read

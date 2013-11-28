@@ -11,21 +11,14 @@ module UnderFire
     end
 
     def build_query
-      builder = build_base_query
-      builder.queries {
-        builder.auth {
-          builder.client UnderFire::Configuration.client_id
-          builder.user UnderFire::Configuration.user_id
-          }
-        builder.lang "eng"
-        builder.country "canada"
+      build_base_query do |builder|
         builder.query(cmd: "ALBUM_TOC"){
           builder.mode "SINGLE_BEST_COVER"
           builder.toc {
             builder.offsets toc
           }
         }
-      }
+      end
     end
   end
 end

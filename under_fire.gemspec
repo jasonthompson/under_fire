@@ -26,6 +26,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "guard-minitest"
   spec.add_development_dependency "rr"
   spec.add_development_dependency "minitest-doc_reporter", "~> 0.6.0"
+  spec.add_development_dependency "ox"
   if RbConfig::CONFIG['target_os'] =~ /mswin|mingw|cygwi/
     spec.add_development_dependency "wdm", ">= 0.1.0"
   end
