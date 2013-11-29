@@ -6,8 +6,9 @@ module UnderFire
     attr_accessor :artist, :track_title, :album_title, :query, :parameters
 
     def initialize(args={})
-      @parameters = args
-      args.each do |k,v| send("#{k}=", v) end
+      super args[:mode]
+      @parameters = args.reject {|k,v| k == :mode}
+      parameters.each do |k,v| send("#{k}=", v) end
       @query = build_query
     end
 

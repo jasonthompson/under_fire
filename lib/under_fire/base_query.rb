@@ -3,6 +3,12 @@ require 'builder'
 
 module UnderFire
   class BaseQuery
+    attr_reader :mode
+
+    def initialize(mode="SINGLE_BEST_COVER")
+      @mode = mode || "SINGLE_BEST_COVER"
+    end
+
     def build_base_query(&block)
       builder = Builder::XmlMarkup.new
       builder.queries {

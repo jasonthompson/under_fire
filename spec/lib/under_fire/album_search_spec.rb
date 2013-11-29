@@ -1,10 +1,11 @@
 require_relative '../../spec_helper.rb'
+require 'ox'
 require 'rr'
 
 module UnderFire
   describe AlbumSearch do
-
-    subject {AlbumSearch.new(artist: "Radiohead",
+    subject {AlbumSearch.new(mode: "SINGLE_BEST_COVER",
+                             artist: "Radiohead",
                              track_title: "Paranoid Android",
                              album_title: "OK Computer")}
     let(:xml){
@@ -29,21 +30,27 @@ module UnderFire
       subject.track_title.must_equal "Paranoid Android"
     end
 
-    describe "#query with all fields" do
-      it "returns the correct xml query" do
-        subject.query.must_include "Radiohead"
-      end
-    end
-
-    describe "#query with artist" do
-      subject{AlbumSearch.new(artist: "Radiohead")}
-      it "returns an xml query with an artist name" do
-        subject.query.must_include "Radiohead"
+    describe "#query" do
+      it "returns well formed xml" do
+        Ox.load(subject.query).must_be_kind_of Ox::Element
       end
 
-      it "does not return album_title or track_title fields" do
-        subject.query.wont_include "TRACK_TITLE"
-        subject.query.wont_include "ALBUM_TITLE"
+      describe "with all fields" do
+        it "returns the correct xml query" do
+          subject.query.must_include "Radiohead"
+        end
+      end
+
+      describe "with artist" do
+        subject{AlbumSearch.new(artist: "Radiohead")}
+        it "returns an xml query with an artist name" do
+          subject.query.must_include "Radiohead"
+        end
+
+        it "does not return album_title or track_title fields" do
+          subject.query.wont_include "TRACK_TITLE"
+          subject.query.wont_include "ALBUM_TITLE"
+        end
       end
     end
   end
