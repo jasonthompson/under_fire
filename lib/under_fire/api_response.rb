@@ -9,7 +9,7 @@ module UnderFire
     end
 
     def to_h
-      response['RESPONSES']
+      response[:responses]
     end
 
     ##
@@ -20,7 +20,10 @@ module UnderFire
     end
 
     def success?
-      response['RESPONSES']['RESPONSE']['@STATUS'] == 'OK'
+      response[:responses][:response][:@status] == 'OK'
+    end
+
+    def album_factory
     end
 
     private 
@@ -40,9 +43,10 @@ module UnderFire
       end
       output
     end
+
     def parse_response(response)
-      parser = Nori.new
+      parser = Nori.new(:convert_tags_to => lambda {|tag| tag.snakecase.to_sym })
       parser.parse(response)
     end
   end
- end
+end

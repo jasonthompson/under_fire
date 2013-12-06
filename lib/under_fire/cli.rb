@@ -16,9 +16,9 @@ module UnderFire
     desc  "toc", "Uses `discid` to get a CD's table of contents and then " +
       "uses the TOC to query Gracenote for album information."
     def toc
-      as = AlbumTOCSearch.new(TOCReader.read)
-      res = APIRequest.post(as.query, Configuration.api_url)
-      say APIResponse.new(res.body).to_s
+      search = AlbumTOCSearch.new(:toc => TOCReader.read)
+      response = APIRequest.post(search.query, Configuration.api_url)
+      say APIResponse.new(response.body).to_s
     end
 
     desc "album", "Queries Gracenote with album <title>, <song> title, or <artist> name"
