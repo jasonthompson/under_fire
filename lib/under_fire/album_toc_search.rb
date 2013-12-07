@@ -18,9 +18,9 @@ module UnderFire
 
     # :toc is required (:mode is optional).
     # 
-    # @params [Hash] args arguments to create an ALBUM_TOC query.
+    # @param [Hash] args arguments to create an ALBUM_TOC query.
     # @option [String] :toc CD table of contents (space-separated list of track start frames)
-    # @mode [String] :mode Either 'SINGLE_BEST' or 'SINGLE_BEST_COVER'
+    # @option [String] :mode Either 'SINGLE_BEST' or 'SINGLE_BEST_COVER'
     def initialize(args)
       super args[:mode]
       @toc = args[:toc]
