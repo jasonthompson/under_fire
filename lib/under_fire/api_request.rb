@@ -4,7 +4,18 @@ require 'uri'
 require 'open-uri'
 
 module UnderFire
+  # HTTP requests required for Gracenote API.
+  #
+  # @todo Error handling
+  #
+  # @example
+  #   response = UnderFire::ApiRequest.post(query_xml, api_url)
+  #
+  #   response = UnderFire::ApiRequest.get_file(image_url, filename)
   class APIRequest
+    # @param [String] query XML query string
+    # @param [String] api_url url for your application
+    # @return [Net::HTTPResponse]
     def self.post(query, api_url)
       uri = URI(api_url)
       http = Net::HTTP.new(uri.host, uri.port)
@@ -17,7 +28,9 @@ module UnderFire
       res = http.request(req)
       res 
     end
-
+    
+    # @param [String] url URL that points to file.
+    # @param [String] filename Filename and path for saving downloaded file.
     def self.get_file(url, filename)
       uri = URI url
 

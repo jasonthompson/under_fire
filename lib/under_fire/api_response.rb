@@ -1,9 +1,12 @@
 require 'nori'
 
 module UnderFire
+  # Wraps query response, providing to_h and to_s methods for easy processing.
   class APIResponse
+    # @return [Hash] Response as Hash.
     attr_reader :response
-
+    
+    # @param [String] response XML string.
     def initialize(response)
       @response = parse_response(response)
     end
@@ -12,13 +15,12 @@ module UnderFire
       response[:responses]
     end
 
-    ##
-    # String output for command line use.
-    # Haven't decided how to format output.
+    # @return [String] String represenation suitable for command line.
     def to_s
       recursive_to_s(to_h)
     end
 
+    # @return [Boolean] Did the query return something?
     def success?
       response[:responses][:response][:@status] == 'OK'
     end
@@ -27,7 +29,9 @@ module UnderFire
     end
 
     private 
-
+    
+    # Recursively walks nested hash structure to return string representation.
+    # @return [String] Flat string representation of nest Hash.
     def recursive_to_s(hash)
       output = ""
       hash.each do |k,v|
@@ -44,6 +48,9 @@ module UnderFire
       output
     end
 
+    # Builds hash from XML response.
+    # @param [String] XML response string.
+    # @return [Hash] Hash representation of response.
     def parse_response(response)
       parser = Nori.new(:convert_tags_to => lambda {|tag| tag.snakecase.to_sym })
       parser.parse(response)

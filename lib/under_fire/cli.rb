@@ -6,6 +6,7 @@ require 'under_fire/album_search'
 require 'under_fire/toc_reader'
 
 module UnderFire
+  # Command Line interface
   class CLI < Thor
     include UnderFire
 

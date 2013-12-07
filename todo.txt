@@ -3,3 +3,4 @@
     * ALBUM_FINGERPRINT
     * ALBUM_FETCH
     * REGISTRATION
+-Use symbols for 'SINGLE_BEST' and 'SINGLE_BEST_COVER'
