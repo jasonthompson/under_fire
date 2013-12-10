@@ -1,5 +1,6 @@
 require 'under_fire/album_search'
 require 'under_fire/album_toc_search'
+require 'under_fire/album_fetch'
 require 'under_fire/api_request'
 require 'under_fire/api_response'
 require 'under_fire/configuration'
@@ -40,6 +41,15 @@ module UnderFire
     # @see UnderFire::AlbumSearch Description of arguments.
     def find_album(args)
       search = AlbumSearch.new(args)
+      response = APIRequest.post(search.query, api_url)
+      APIResponse.new(response.body)
+    end
+    
+    # Fetches album with given album :gn_id or track :gn_id
+    # @return [APIResponse]
+    # @see UnderFire::AlbumFetch Description of arguments.
+    def fetch_album(args)
+      search = AlbumFetch.new(args)
       response = APIRequest.post(search.query, api_url)
       APIResponse.new(response.body)
     end

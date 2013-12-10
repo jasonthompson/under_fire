@@ -40,6 +40,15 @@ module UnderFire
       request = APIRequest.post(search.query, Configuration.api_url)
       say APIResponse.new(request.body).to_s
     end
+    
+    desc "id", "Fetches album info using given Gracenote ID."
+    method_option :gn_id, :aliases => ['-i', '--id'], :required => true,
+      :desc => "Gracenote album or song GN_ID"
+    def id
+      search = AlbumFetch.new(options)
+      request = APIRequest.post(search.query, Configuration.api_url)
+      say APIResponse.new(request.body).to_s
+    end 
 
     desc "cover", "Gets cover from Gracenote."
     method_option :url, :aliases => '-u', :required => true,

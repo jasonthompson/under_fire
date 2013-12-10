@@ -49,7 +49,7 @@ module UnderFire
     # Builds ALBUM_SEARCH-specific part of ALBUM_SEARCH query and adds it to the base query
     # common to all query types. Called by constructor.
     #
-    # @return [String] XML string for ALBUM_TOC query.
+    # @return [String] XML string for ALBUM_SEARCH query.
     def build_query
       build_base_query do |builder|
         builder.query(cmd: "ALBUM_SEARCH"){
