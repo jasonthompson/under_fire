@@ -27,8 +27,8 @@ module UnderFire
       :aliases => '-t',
       :desc => "Specify album title",
       :required => false
-    method_option :song_title,
-      :aliases => '-s',
+    method_option :track_title,
+      :aliases => ['-s', :song_title],
       :desc => "Specify song title",
       :required => false
     method_option :artist,
