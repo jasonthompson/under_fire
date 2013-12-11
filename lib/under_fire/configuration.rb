@@ -1,4 +1,5 @@
 module UnderFire
+  # Configuration information. Currently stored as environment variables.
   module Configuration
     # Gracenote client id stored in environment variable.
     # @return [String]
@@ -13,7 +14,8 @@ module UnderFire
       ci_string
     end
 
-
+    # Part of client id after hyphen
+    # @return [String]
     def client_tag
       _, ct = ENV['GRACENOTE_CLIENT_ID'].split('-')
       ct

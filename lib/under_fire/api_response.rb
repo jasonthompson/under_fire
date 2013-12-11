@@ -10,7 +10,8 @@ module UnderFire
     def initialize(response)
       @response = parse_response(response)
     end
-
+    
+    # @return [Hash] Hash representation of response.
     def to_h
       response[:responses]
     end
@@ -23,9 +24,6 @@ module UnderFire
     # @return [Boolean] Did the query return something?
     def success?
       response[:responses][:response][:@status] == 'OK'
-    end
-
-    def album_factory
     end
 
     private 
