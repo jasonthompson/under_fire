@@ -3,7 +3,6 @@ require 'under_fire/api_request'
 require 'under_fire/api_response'
 require 'under_fire/album_toc_search'
 require 'under_fire/album_search'
-require 'under_fire/toc_reader'
 
 module UnderFire
   # Command Line interface
@@ -14,10 +13,10 @@ module UnderFire
       super
     end
 
-    desc  "toc", "Uses `discid` to get a CD's table of contents and then " +
-      "uses the TOC to query Gracenote for album information."
-    def toc
-      search = AlbumTOCSearch.new(:toc => TOCReader.read)
+    desc  "toc", "Uses provided TOC to query Gracenote for album information."
+    def toc(*offsets)
+      offsets = offsets.join(" ")
+      search = AlbumTOCSearch.new(:toc => offsets)
       response = APIRequest.post(search.query, Configuration.api_url)
       say APIResponse.new(response.body).to_s
     end
@@ -40,7 +39,7 @@ module UnderFire
       request = APIRequest.post(search.query, Configuration.api_url)
       say APIResponse.new(request.body).to_s
     end
-    
+
     desc "id", "Fetches album info using given Gracenote ID."
     method_option :gn_id, :aliases => ['-i', '--id'], :required => true,
       :desc => "Gracenote album or song GN_ID"
@@ -48,7 +47,7 @@ module UnderFire
       search = AlbumFetch.new(options)
       request = APIRequest.post(search.query, Configuration.api_url)
       say APIResponse.new(request.body).to_s
-    end 
+    end
 
     desc "cover", "Gets cover from Gracenote."
     method_option :url, :aliases => '-u', :required => true,

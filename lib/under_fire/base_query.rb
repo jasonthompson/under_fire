@@ -16,9 +16,9 @@ module UnderFire
     def build_base_query(&block)
       builder = Builder::XmlMarkup.new
       builder.queries {
-        builder.auth {
-          builder.client Configuration.client_id
-          builder.user Configuration.user_id
+        builder.AUTH {
+          builder.CLIENT Configuration.client_id
+          builder.USER Configuration.user_id
         }
         builder.lang "eng"
         builder.country "canada"

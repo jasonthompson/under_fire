@@ -4,7 +4,6 @@ require 'under_fire/album_fetch'
 require 'under_fire/api_request'
 require 'under_fire/api_response'
 require 'under_fire/configuration'
-require 'under_fire/toc_reader'
 
 require 'pry'
 
@@ -14,9 +13,9 @@ module UnderFire
   # @example
   #   client = UnderFire::Client.new
   #   client.album_search(:artist => 'Miles Davis') #=> lots of results
-  #   
+  #
   #   client = UnderFire::Client.new
-  #   client.find_by_toc
+  #   client.find_by_toc space_delimited_toc_offsets
   class Client
     include UnderFire
 
@@ -27,15 +26,16 @@ module UnderFire
       @api_url = Configuration.api_url
     end
 
-    # Searches for album using TOC of CD in drive.
-    # @return [APIResponse] 
+    # Searches for album using provided toc offsets.
+    # @return [APIResponse]
     # @see UnderFire::AlbumTOCSearch
-    def find_by_toc
-      search = AlbumTOCSearch.new(get_toc)
+    def find_by_toc(*offsets)
+      offsets = offsets.join(" ")
+      search = AlbumTOCSearch.new(:toc => offsets)
       response = APIRequest.post(search.query, api_url)
       APIResponse.new(response.body)
     end
-    
+
     # Finds album using one or more of :artist, :track_title and :album_title
     # @return [APIResponse]
     # @see UnderFire::AlbumSearch Description of arguments.
@@ -44,7 +44,7 @@ module UnderFire
       response = APIRequest.post(search.query, api_url)
       APIResponse.new(response.body)
     end
-    
+
     # Fetches album with given album :gn_id or track :gn_id
     # @return [APIResponse]
     # @see UnderFire::AlbumFetch Description of arguments.
@@ -61,12 +61,6 @@ module UnderFire
       response_url = res['RESPONSE']['ALBUM']['URL']
       title = res['RESPONSE']['ALBUM']['TITLE']
       APIRequest.get_file(response_url, "#{title}-cover.jpeg")
-    end
-
-    private
-
-    def get_toc
-      TOCReader.read
     end
   end
 end

@@ -12,12 +12,12 @@ module UnderFire
   class AlbumTOCSearch < BaseQuery
     # @return [String] CD Table of contents.
     attr_reader :toc
-    
+
     # @return [String] XML string for ALBUM_TOC query.
     attr_reader :query
 
     # :toc is required (:mode is optional).
-    # 
+    #
     # @param [Hash] args arguments to create an ALBUM_TOC query.
     # @option [String] :toc CD table of contents (space-separated list of track start frames)
     # @option [String] :mode Either 'SINGLE_BEST' or 'SINGLE_BEST_COVER'
@@ -33,10 +33,10 @@ module UnderFire
     # @return [String] XML string for ALBUM_TOC query.
     def build_query
       build_base_query do |builder|
-        builder.query(cmd: "ALBUM_TOC"){
-          builder.mode mode
-          builder.toc {
-            builder.offsets toc
+        builder.QUERY(cmd: "ALBUM_TOC"){
+          builder.MODE mode
+          builder.TOC {
+            builder.OFFSETS toc.to_s
           }
         }
       end

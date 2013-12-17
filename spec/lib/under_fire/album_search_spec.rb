@@ -35,6 +35,11 @@ module UnderFire
         Ox.load(subject.query).must_be_kind_of Ox::Element
       end
 
+      it "returns xml with an auth element" do
+        subject.query.must_include "<AUTH>"
+        subject.query.must_include "</AUTH>"
+      end
+
       describe "with all fields" do
         it "returns the correct xml query" do
           subject.query.must_include "Radiohead"
