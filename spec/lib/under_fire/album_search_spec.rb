@@ -21,8 +21,8 @@ module UnderFire
     }
 
     before do
-          ENV['GRACENOTE_CLIENT_ID'] = '1234454'
-          ENV['GRACENOTE_USER_ID'] = '2353452345243545-454351435kj435j345434'
+      config = UnderFire::Configuration.instance
+      ENV['UF_CONFIG_PATH'] = File.expand_path('spec/fixtures/.ufrc')
     end
 
     it "accepts a hash of arguments" do
@@ -49,7 +49,7 @@ module UnderFire
       describe "with artist" do
         subject{AlbumSearch.new(artist: "Radiohead")}
         it "returns an xml query with an artist name" do
-          subject.query.must_include "Radiohead"
+          subject.query.must_include "Radioheab"
         end
 
         it "does not return album_title or track_title fields" do

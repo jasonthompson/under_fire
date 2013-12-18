@@ -1,30 +1,45 @@
+require 'singleton'
+
 module UnderFire
-  # Configuration information. Currently stored as environment variables.
-  module Configuration
+  # Configuration information.
+  class Configuration
+    include Singleton
+
+    attr_accessor :path
+
+    attr_reader :config_info
+
+    CONFIG_FILE_NAME = '.ufrc'
+
+    def initialize
+      @path = ENV['UF_CONFIG_PATH'] || File.join(File.expand_path('~'), CONFIG_FILE_NAME)
+      @config_info = load_config
+    end
+
     # Gracenote client id stored in environment variable.
     # @return [String]
     def client_id
-      ENV['GRACENOTE_CLIENT_ID']
+      config_info["client_id"]
     end
 
     # Part of client id before the hyphen (used by api_url).
     # @return [String]
     def client_id_string
-      ci_string, _ = ENV['GRACENOTE_CLIENT_ID'].split('-')
+      ci_string, _ = config_info['client_id'].split('-')
       ci_string
     end
 
     # Part of client id after hyphen
     # @return [String]
     def client_tag
-      _, ct = ENV['GRACENOTE_CLIENT_ID'].split('-')
+      _, ct = config_info['client_id'].split('-')
       ct
     end
 
     # Gracenote user id stored as environment variable.
     # @return [String]
     def user_id
-      ENV['GRACENOTE_USER_ID']
+      config_info['user_id']
     end
 
     # Gracenote API url for use in queries.
@@ -33,7 +48,19 @@ module UnderFire
       "https://c#{client_id_string}.web.cddbp.net/webapi/xml/1.0/"
     end
 
-    module_function :client_id, :client_tag, :api_url, :user_id,
-                    :client_id_string
+    def load_config
+      require 'yaml'
+      YAML.load_file(@path)
+#    rescue Errno::ENOENT
+#      {}
+    end
+
+    private
+    def write_config
+      require 'yaml'
+      File.open(@path, File::RDWR | File::CREATE, 0600) do |f|
+        f.write @data.to_yaml
+      end
+    end
   end
 end

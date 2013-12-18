@@ -18,8 +18,8 @@ module UnderFire
       '</query></queries>'}
 
     before do
-          ENV['GRACENOTE_CLIENT_ID'] = '1234454'
-          ENV['GRACENOTE_USER_ID'] = '2353452345243545-454351435kj435j345434'
+      ENV['UF_CONFIG_PATH'] = File.expand_path('spec/fixtures/.ufrc')
+      @config = UnderFire::Configuration.instance
     end
 
 

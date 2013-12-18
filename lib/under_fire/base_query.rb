@@ -6,10 +6,14 @@ module UnderFire
   class BaseQuery
     # @return [String]
     attr_reader :mode
-    
+
+    # @return [UnderFire::Configuration]
+    attr_reader :config
+
     # @param [String] mode Either 'SINGLE_BEST' or 'SINGLE_BEST_COVER' (defaults to 'SINGLE_BEST_COVER').
     def initialize(mode="SINGLE_BEST_COVER")
       @mode = mode || "SINGLE_BEST_COVER"
+      @config = Configuration.instance
     end
 
     # @yield [Builder] builder object used by subclass's build_query method.
@@ -17,8 +21,8 @@ module UnderFire
       builder = Builder::XmlMarkup.new
       builder.queries {
         builder.AUTH {
-          builder.CLIENT Configuration.client_id
-          builder.USER Configuration.user_id
+          builder.CLIENT config.client_id
+          builder.USER config.user_id
         }
         builder.lang "eng"
         builder.country "canada"
