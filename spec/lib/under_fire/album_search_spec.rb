@@ -21,7 +21,6 @@ module UnderFire
     }
 
     before do
-      config = UnderFire::Configuration.instance
       ENV['UF_CONFIG_PATH'] = File.expand_path('spec/fixtures/.ufrc')
     end
 
@@ -49,7 +48,7 @@ module UnderFire
       describe "with artist" do
         subject{AlbumSearch.new(artist: "Radiohead")}
         it "returns an xml query with an artist name" do
-          subject.query.must_include "Radioheab"
+          subject.query.must_include "Radiohead"
         end
 
         it "does not return album_title or track_title fields" do
