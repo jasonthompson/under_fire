@@ -8,17 +8,6 @@ module UnderFire
                              artist: "Radiohead",
                              track_title: "Paranoid Android",
                              album_title: "OK Computer")}
-    let(:xml){
-      '<queries><auth><client>1234454</client>'+
-      '<user>2353452345243545-454351435kj435j345434</user></auth>'+
-      '<lang>eng</lang><country>canada</country>'+
-      '<query cmd="ALBUM_SEARCH">'+
-      '<mode>SINGLE_BEST_COVER</mode>'+
-      '<text type="ALBUM_TITLE">OK Computer</text>'+
-      '<text type="TRACK_TITLE">Paranoid Android</text>'+
-      '<text type="ARTIST">Radiohead</text>'+
-      '</query></queries>'
-    }
 
     before do
       ENV['UF_CONFIG_PATH'] = File.expand_path('spec/fixtures/.ufrc')

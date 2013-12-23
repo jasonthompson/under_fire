@@ -8,15 +8,6 @@ module UnderFire
         "110612 122590 132127 141685"}
     subject {AlbumTOCSearch.new(toc: toc)}
 
-    let(:xml){
-      '<queries><auth><client>1234454</client>'+
-      '<user>2353452345243545-454351435kj435j345434</user></auth>'+
-      '<lang>eng</lang><country>canada</country>'+
-      '<query cmd="ALBUM_TOC">'+
-      '<mode>SINGLE_BEST_COVER</mode>'+
-      '<toc><offsets>' + toc + '</offsets></toc>'+
-      '</query></queries>'}
-
     before do
       ENV['UF_CONFIG_PATH'] = File.expand_path('spec/fixtures/.ufrc')
       @config = UnderFire::Configuration.instance

@@ -6,19 +6,6 @@ module UnderFire
   describe AlbumFetch do
     subject {AlbumFetch.new(:gn_id => '7F28ADC369EB90E53A7F6CA3A70D56V')}
 
-    let(:xml){
-      '<queries>'+
-      '<auth>'+
-      '<client>1234454</client>'+
-      '<user>2353452345243545-454351435kj435j345434</user>'+
-      '</auth>'+
-      '<lang>eng</lang>'+
-      '<country>canada</country>'+
-      '<query cmd="album_fetch">'+
-      '<gn_id>7F28ADC369EB90E53A7F6CA3A70D56V</gn_id>'+
-      '</query>'+
-      '</queries>'}
-
     before do
       ENV['UF_CONFIG_PATH'] = File.expand_path('spec/fixtures/.ufrc')
       @config = UnderFire::Configuration.instance

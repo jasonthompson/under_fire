@@ -32,18 +32,16 @@ module UnderFire
     # Part of client id before the hyphen (used by api_url).
     # @return [String]
     def client_id_string
-      ci_string, _ = config_info['client_id'].split('-')
-      ci_string
+      client_id.split('-')[0]
     end
 
     # Part of client id after hyphen
     # @return [String]
     def client_tag
-      _, ct = config_info['client_id'].split('-')
-      ct
+      client_id.split('-')[1]
     end
 
-    # Gracenote user id 
+    # Gracenote user id
     # @return [String]
     def user_id
       config_info.fetch('user_id', nil).to_s
@@ -62,10 +60,14 @@ module UnderFire
       "https://c#{client_id_string}.web.cddbp.net/webapi/xml/1.0/"
     end
 
+    # Returns true is user has a user_id
+    # @return [Boolean]
     def authorized?
       user_id != nil
     end
 
+    # Returns true if user has a client_id and user_id
+    # @return [Boolean]
     def configured?
       client_id != nil && !authorized?
     end

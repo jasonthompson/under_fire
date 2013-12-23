@@ -42,7 +42,7 @@ module UnderFire
 
     describe "unconfigured" do
       describe "#configured?" do
-        it "returns false if there is no client_id or user_id" do
+        it "returns false if there are no credentials" do
           tmp_ufrc = File.join(Dir.mktmpdir, ".ufrc")
           config = Configuration.instance
           config.path = tmp_ufrc

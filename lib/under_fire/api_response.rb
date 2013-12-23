@@ -5,12 +5,12 @@ module UnderFire
   class APIResponse
     # @return [Hash] Response as Hash.
     attr_reader :response
-    
+
     # @param [String] response XML string.
     def initialize(response)
       @response = parse_response(response)
     end
-    
+
     # @return [Hash] Hash representation of response.
     def to_h
       response[:responses]
@@ -26,8 +26,8 @@ module UnderFire
       response[:responses][:response][:@status] == 'OK'
     end
 
-    private 
-    
+    private
+
     # Recursively walks nested hash structure to return string representation.
     # @return [String] Flat string representation of nest Hash.
     def recursive_to_s(hash)

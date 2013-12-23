@@ -26,9 +26,9 @@ module UnderFire
       req.body = query
       req['Content-Type'] = 'application/xml'
       res = http.request(req)
-      res 
+      res
     end
-    
+
     # @param [String] url URL that points to file.
     # @param [String] filename Filename and path for saving downloaded file.
     def self.get_file(url, filename)
@@ -36,7 +36,7 @@ module UnderFire
 
       Net::HTTP.start(uri.host, uri.port) do |http|
         request = Net::HTTP::Get.new uri
-        
+
         http.request request do |response|
           open filename, 'w' do |io|
             response.read_body do |chunk|

@@ -6,21 +6,26 @@ module UnderFire
   #
   # @see https://developer.gracenote.com/sites/default/files/web/html/index.html#Music%20Web%20API/Registration%20and%20Authentication.html#_Toc344907213
   class Registration
-    # @return [String] XML string for query 
+    # @return [String] XML string for query
     attr_reader :query
-    
-    def initialize
+
+    # @return [String] Gracenote Client ID
+    attr_reader :client_id
+
+    # @param [String] Gracenote Client ID.
+    def initialize(client_id)
+      @client_id = client_id
       @query = build_query
     end
-    
+
     # Builds XML for REGISTRATION query.
     #
     # @return [String] XML string for REGISTRATION
     def build_query
       builder = Builder::XmlMarkup.new
-      xml = builder.queries {
-        builder.query(cmd: 'REGISTER'){
-        builder.client UnderFire::Configuration.client_id
+      xml = builder.QUERIES {
+        builder.QUERY(cmd: 'REGISTER'){
+        builder.CLIENT client_id
         }
       }
       xml
