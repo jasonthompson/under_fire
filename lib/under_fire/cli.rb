@@ -26,18 +26,15 @@ module UnderFire
       say "\sfrom the App Details."
       ask "\nPlease press [Enter] once you have a Client ID."
 
-      cid = ask "Enter your client id: "
+      cid = ask "Enter your client id:"
       config.client_id = cid
       say "Saved client_id to #{config.path}"
       search = Registration.new(config.client_id)
-      puts config.api_url
-      puts search.query
       raw_response = APIRequest.post(search.query, config.api_url)
-      puts raw_response.body
       response = APIResponse.new(raw_response.body)
 
       if response.success?
-        user_id = response[:response][:user]
+        user_id = response.to_h[:response][:user]
         config.user_id = user_id
         say "Saved user_id to #{config.path}"
       else

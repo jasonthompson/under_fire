@@ -95,7 +95,7 @@ module UnderFire
 
     def write_config
       require 'yaml'
-      File.open(path, File::CREAT|File::RDWR) do |f|
+      File.open(path, 'w+', 0640) do |f|
         f.write config_info.to_yaml
       end
     end
