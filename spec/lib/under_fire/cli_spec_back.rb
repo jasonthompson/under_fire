@@ -1,9 +1,13 @@
 require_relative '../../spec_helper'
 require 'rr'
+require 'ostruct'
 
 module UnderFire
   describe CLI do
     before do
+      mock(Configuration).instance {OpenStruct.new(:api_url => "http://blah.com",
+                                                     :user_id => "1233453-34234235235",
+                                                     :client_id => "j2545245342-235qk245qq43")}
       @cli = CLI.new
       @stdout_old = $stdout
       @stdin_old = $stdin

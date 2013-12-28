@@ -23,7 +23,17 @@ module UnderFire
 
     # @return [Boolean] Did the query return something?
     def success?
-      response[:responses][:response][:@status] == 'OK'
+      to_h[:response][:@status] == 'OK'
+    end
+
+    def albums?
+      to_h[:response].has_key?(:album)
+    end
+
+    def album_count
+      count = 0
+      count = to_h[:response][:album].count if albums?
+      count
     end
 
     private

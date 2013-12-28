@@ -65,7 +65,7 @@ module UnderFire
       :required => false
     def album
       search = AlbumSearch.new(options)
-      request = APIRequest.post(search.query, Configuration.api_url)
+      request = APIRequest.post(search.query, config.api_url)
       say APIResponse.new(request.body).to_s
     end
 
@@ -74,7 +74,7 @@ module UnderFire
       :desc => "Gracenote album or song GN_ID"
     def id
       search = AlbumFetch.new(options)
-      request = APIRequest.post(search.query, Configuration.api_url)
+      request = APIRequest.post(search.query, config.api_url)
       say APIResponse.new(request.body).to_s
     end
 
