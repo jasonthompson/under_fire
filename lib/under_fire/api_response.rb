@@ -1,7 +1,7 @@
 require 'nori'
 
 module UnderFire
-  # Wraps query response, providing to_h and to_s methods for easy processing.
+  # Wraps query response.
   class APIResponse
     # @return [Hash] Response as Hash.
     attr_reader :response
@@ -26,14 +26,20 @@ module UnderFire
       to_h[:response][:@status] == 'OK'
     end
 
+    # @return [Boolean] Are there any album listings in response?
     def albums?
       to_h[:response].has_key?(:album)
     end
 
+    # @return [Integer] Number of album listings in response.
     def album_count
       count = 0
       count = to_h[:response][:album].count if albums?
       count
+    end
+
+    def albums
+     [] 
     end
 
     private

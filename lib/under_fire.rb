@@ -7,7 +7,7 @@ require 'under_fire/api_request'
 require 'under_fire/api_response'
 require 'under_fire/album_toc_search'
 require 'under_fire/cli'
-
+require 'under_fire/album'
 # A wrapper library for the Gracenote web API that also provides a command line executable (under-fire).
 module UnderFire
 end
