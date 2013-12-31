@@ -15,14 +15,14 @@ module UnderFire
       it "has a client_id" do
         config = Configuration.instance
         config.path = config_file
-        config.client_id.must_equal "1252545-34543523452345"
+        config.client_id.must_equal "2353454353-adfafOAOAOAOA345"
       end
 
       it "has a user_id" do
         config = Configuration.instance
         config.path = config_file
         puts config.path
-        config.user_id.must_equal "12354534"
+        config.user_id.must_equal "1252545-34543523452345"
       end
 
       describe "#path" do
