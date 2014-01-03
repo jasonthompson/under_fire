@@ -1,31 +1,39 @@
 module UnderFire
   class Album
-      # <GN_ID>86372321-2C7F28ADC369EB90E53A7F6CA3A70D56</GN_ID>
-      # <ARTIST>The Beatles</ARTIST>
-      # <TITLE>Help!</TITLE>
-      # <PKG_LANG>ENG</PKG_LANG>
-      # <GENRE NUM="61364" ID="25332">60&apos;s Rock</GENRE>
-      # <TRACK_COUNT>13</TRACK_COUNT>
-      # <TRACK>
-      #   <TRACK_NUM>1</TRACK_NUM>
-      #   <GN_ID>86372322-05CF584F3265FA67F3E0C18987973C21</GN_ID>
-      #   <TITLE>Help!</TITLE>
-      # </TRACK>
-
+    # @return [String] Album title.
     attr_accessor :title
+
+    # @return [String] Name of artist.
     attr_accessor :artist
+
+    # @return [String] Gracenote ID for album.
     attr_accessor :gn_id
+
+    # @return [String]
     attr_accessor :genre
+
+    # @return [Int]
     attr_accessor :track_count
-    attr_accessor :track
+
+    # @return [String] Language used.
     attr_accessor :pkg_lang
-    attr_accessor :date
 
-    alias_method :tracks, :track
-    alias_method :tracks=, :track=
-
+    attr_writer :date
+    attr_writer :track
+    
     def initialize(args={})
       args.each {|k,v| send("#{k}=", v)}
+    end
+  
+    # @return [Date] Album year.
+    def date
+      Date.new(@date.to_i)
+    end
+
+    # @return [Array<Track>] An array of Tracks on album
+    def tracks
+      require 'under_fire/track'
+      @track.map {|t| UnderFire::Track.new(t)}
     end
   end
 end

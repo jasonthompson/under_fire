@@ -66,7 +66,7 @@ module UnderFire
     # @param [String] response XML response string.
     # @return [Hash] Hash representation of response.
     def parse_response(response)
-      parser = Nori.new(:convert_tags_to => lambda {|tag| tag.snakecase.to_sym })
+      parser = Nori.new(:convert_tags_to => lambda {|tag| tag.snakecase.to_sym})
       parser.parse(response)
     end
   end

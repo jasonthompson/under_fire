@@ -42,10 +42,6 @@ module UnderFire
       it "returns an Array" do
         subject.albums.must_be_kind_of Array
       end
-
-      it "returns an Array of one or more Albums" do
-        subject.albums[0].must_be_kind_of UnderFire::Album
-      end
     end
   end
 end

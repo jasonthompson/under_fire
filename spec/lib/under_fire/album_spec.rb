@@ -35,8 +35,14 @@ module UnderFire
                                    :title=>"Brain Damage/Eclipse"}])}
 
     describe "#tracks" do
-      it "must be a list of tracks" do
-        subject.tracks.count.must_equal 8 
+      it "must contain correct number of tracks" do
+        subject.tracks.count.must_equal 8
+      end
+    end
+
+    describe "#date" do
+      it "must return a Date" do
+        subject.date.must_be_kind_of Date
       end
     end
   end
