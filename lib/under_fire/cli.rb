@@ -16,32 +16,6 @@ module UnderFire
       @config = Configuration.instance
     end
 
-    desc "register", "Asks for client_id and registers user."
-    def register
-      say "\nIn order to proceed, please obtain a Gracenote Client ID."
-      say "\nTo obtain a Client ID:"
-      say "\s1) Register at http://developer.gracenote.com."
-      say "\s2) Click on Add a New App."
-      say "\s3) Obtain your 'Client ID for Mobile Client, Web API, and eyeQ'"
-      say "\sfrom the App Details."
-      ask "\nPlease press [Enter] once you have a Client ID."
-
-      cid = ask "Enter your client id:"
-      config.client_id = cid
-      say "Saved client_id to #{config.path}"
-      search = Registration.new(config.client_id)
-      raw_response = APIRequest.post(search.query, config.api_url)
-      response = APIResponse.new(raw_response.body)
-
-      if response.success?
-        user_id = response.to_h[:response][:user]
-        config.user_id = user_id
-        say "Saved user_id to #{config.path}"
-      else
-        puts response.to_s
-      end
-    end
-
     desc  "toc", "Uses provided TOC to query Gracenote for album information."
     def toc(*offsets)
       offsets = offsets.join(" ")
@@ -65,9 +39,8 @@ module UnderFire
       :required => false
     def album
       search = AlbumSearch.new(options)
-      say search.query + " " + config.api_url
-      # request = APIRequest.post(search.query, config.api_url)
-      # say APIResponse.new(request.body).to_s
+      request = APIRequest.post(search.query, config.api_url)
+      say APIResponse.new(request.body).to_s
     end
 
     desc "id", "Fetches album info using given Gracenote ID."
