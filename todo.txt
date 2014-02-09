@@ -2,6 +2,3 @@
 -To implement:
     * ALBUM_FINGERPRINT
     * ALBUM_FETCH
-    * REGISTRATION
-    * CLI Cover -verbose and -quiet modes
--Use symbols for 'SINGLE_BEST' and 'SINGLE_BEST_COVER'
