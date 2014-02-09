@@ -1,8 +1,5 @@
 require 'thor'
 require 'under_fire/api_request'
-# require 'under_fire/api_response'
-# require 'under_fire/album_toc_search'
-# require 'under_fire/album_search'
 require 'under_fire/client'
 
 module UnderFire
