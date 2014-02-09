@@ -54,6 +54,15 @@ module UnderFire
       APIResponse.new(response.body)
     end
 
+    # Registers user with given client_id
+    # @return [APIResponse]
+    # @see UnderFire::Registration Description of arguments
+    def register(client_id)
+      search = Registration.new(client_id)
+      response = APIRequest.post(search.query, api_url)
+      APIResponse.new(response.body)
+    end
+
     # Fetches cover art using results of query.
     # @param [APIResponse] response
     def fetch_cover(response)

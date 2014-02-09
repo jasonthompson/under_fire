@@ -73,5 +73,13 @@ module UnderFire
       APIRequest.get_file(url, file_name)
       say "saved #{file_name} in #{File.dirname __FILE__}" if options[:verbose]
     end
+
+    desc "register", "Registers user with client_id."
+    method_option :client_id,
+      :aliases => '-c',
+      :required => true
+    def register
+      say client.register(options[:client_id])
+    end
   end
 end

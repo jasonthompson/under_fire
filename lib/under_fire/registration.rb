@@ -24,7 +24,7 @@ module UnderFire
     def build_query
       builder = Builder::XmlMarkup.new
       xml = builder.QUERIES {
-        builder.QUERY(cmd: 'REGISTER'){
+        builder.QUERY(CMD: 'REGISTER'){
         builder.CLIENT client_id
         }
       }
