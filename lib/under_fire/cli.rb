@@ -1,27 +1,31 @@
 require 'thor'
 require 'under_fire/api_request'
-require 'under_fire/api_response'
-require 'under_fire/album_toc_search'
-require 'under_fire/album_search'
+# require 'under_fire/api_response'
+# require 'under_fire/album_toc_search'
+# require 'under_fire/album_search'
+require 'under_fire/client'
 
 module UnderFire
   # Command Line interface
   class CLI < Thor
     include UnderFire
 
-    attr_reader :config
+    attr_reader :config, :client
 
     def initialize(*)
       super
       @config = Configuration.instance
+      @client = Client.new()
     end
 
-    desc  "toc", "Uses provided TOC to query Gracenote for album information."
-    def toc(*offsets)
-      offsets = offsets.join(" ")
-      search = AlbumTOCSearch.new(:toc => offsets)
-      response = APIRequest.post(search.query, config.api_url)
-      say APIResponse.new(response.body).to_s
+    desc  "toc", "Use provided offsets to query Gracenote for album information."
+    method_option :offsets,
+      :aliases => '-o',
+      :desc => "Specify cd table of contents offsets",
+      :required => true,
+      :type => :array 
+    def toc
+      say client.find_by_toc(options[:offsets])
     end
 
     desc "album", "Queries Gracenote with album <title>, <song> title, or <artist> name"
@@ -38,25 +42,28 @@ module UnderFire
       :desc => "Specify artist name",
       :required => false
     def album
-      search = AlbumSearch.new(options)
-      request = APIRequest.post(search.query, config.api_url)
-      say APIResponse.new(request.body).to_s
+      say client.find_album(options)
     end
 
-    desc "id", "Fetches album info using given Gracenote ID."
-    method_option :gn_id, :aliases => ['-i', '--id'], :required => true,
+    desc "id", "Not yet implemented"
+    method_option :gn_id, 
+      :aliases => ['-i', '--id'], 
+      :required => true,
       :desc => "Gracenote album or song GN_ID"
     def id
-      search = AlbumFetch.new(options)
-      request = APIRequest.post(search.query, Configuration.api_url)
-      say APIResponse.new(request.body).to_s
+      puts "Not implemented"
     end
 
     desc "cover", "Gets cover from Gracenote."
-    method_option :url, :aliases => '-u', :required => true,
+    method_option :url, 
+      :aliases => '-u', 
+      :required => true,
       :desc => "URL provided by Gracenote for downloading cover image."
-    method_option :file_name, :aliases => '-f', :required => false,
-      :desc => "File name for saving image."
+    method_option :file_name, 
+      :aliases => '-f', 
+      :required => false,
+      :desc => "File name for saving image.",
+      :default => ""
     def cover
       say "Fetching cover"
       url = options[:url]

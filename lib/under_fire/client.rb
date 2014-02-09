@@ -23,7 +23,7 @@ module UnderFire
     attr_reader :api_url
 
     def initialize
-      @api_url = Configuration.api_url
+      @api_url = Configuration.instance.api_url
     end
 
     # Searches for album using provided toc offsets.

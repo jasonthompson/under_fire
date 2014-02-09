@@ -33,7 +33,7 @@ module UnderFire
     # @return [String] XML string for ALBUM_TOC query.
     def build_query
       build_base_query do |builder|
-        builder.QUERY(cmd: "ALBUM_TOC"){
+        builder.QUERY(CMD: "ALBUM_TOC"){
           builder.MODE mode
           builder.TOC {
             builder.OFFSETS toc.to_s

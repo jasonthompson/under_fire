@@ -6,5 +6,5 @@ module UnderFire
   #   MINOR version when you add functionality in a backwards-compatible manner, and
   #   PATCH version when you make backwards-compatible bug fixes.
   #   Refer to: http://semver.org/
-  VERSION = "0.6.1"
+  VERSION = "0.7.0"
 end
