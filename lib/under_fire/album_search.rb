@@ -52,10 +52,10 @@ module UnderFire
     # @return [String] XML string for ALBUM_SEARCH query.
     def build_query
       build_base_query do |builder|
-        builder.QUERY(cmd: "ALBUM_SEARCH"){
+        builder.QUERY(CMD: "ALBUM_SEARCH"){
           builder.MODE "SINGLE_BEST_COVER"
           parameters.each do |k,v|
-            builder.text(v, type: k.to_s.upcase)
+            builder.TEXT(v, TYPE: k.to_s.upcase)
           end
         }
       end
