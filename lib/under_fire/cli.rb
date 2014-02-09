@@ -20,7 +20,7 @@ module UnderFire
       :aliases => '-o',
       :desc => "Specify cd table of contents offsets",
       :required => true,
-      :type => :array 
+      :type => :array
     def toc
       say client.find_by_toc(options[:offsets])
     end
@@ -43,8 +43,8 @@ module UnderFire
     end
 
     desc "id", "Not yet implemented"
-    method_option :gn_id, 
-      :aliases => ['-i', '--id'], 
+    method_option :gn_id,
+      :aliases => ['-i', '--id'],
       :required => true,
       :desc => "Gracenote album or song GN_ID"
     def id
@@ -52,21 +52,26 @@ module UnderFire
     end
 
     desc "cover", "Gets cover from Gracenote."
-    method_option :url, 
-      :aliases => '-u', 
+    method_option :url,
+      :aliases => '-u',
       :required => true,
       :desc => "URL provided by Gracenote for downloading cover image."
-    method_option :file_name, 
-      :aliases => '-f', 
+    method_option :file_name,
+      :aliases => '-f',
       :required => false,
       :desc => "File name for saving image.",
       :default => ""
+    method_option :verbose,
+      :aliases => '-v',
+      :type => :boolean,
+      :required => false,
+      :default => false
     def cover
-      say "Fetching cover"
+      say "Fetching cover" if options[:verbose]
       url = options[:url]
       file_name = options[:file_name].empty? ? "cover.jpg" : options[:file_name]
       APIRequest.get_file(url, file_name)
-      say "saved #{file_name} in #{File.dirname __FILE__}"
+      say "saved #{file_name} in #{File.dirname __FILE__}" if options[:verbose]
     end
   end
 end
