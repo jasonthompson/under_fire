@@ -65,11 +65,13 @@ module UnderFire
 
     # Fetches cover art using results of query.
     # @param [APIResponse] response
-    def fetch_cover(response)
+    def fetch_cover(response, file_name)
       res = response.to_h
       response_url = res['RESPONSE']['ALBUM']['URL']
       title = res['RESPONSE']['ALBUM']['TITLE']
-      APIRequest.get_file(response_url, "#{title}-cover.jpeg")
+      file_name = file_name || "#{title}-cover.jpg"
+
+      APIRequest.get_file(response_url, filename)
     end
   end
 end

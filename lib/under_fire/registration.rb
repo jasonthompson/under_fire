@@ -12,7 +12,7 @@ module UnderFire
     # @return [String] Gracenote Client ID
     attr_reader :client_id
 
-    # @param [String] Gracenote Client ID.
+    # @param [String] client_id Gracenote Client ID.
     def initialize(client_id)
       @client_id = client_id
       @query = build_query

@@ -7,6 +7,7 @@ Wraps Gracenote's Web API in Ruby goodness. UnderFire provides two interfaces: a
 ```ruby
 gem install under_fire
 ```
+
 ## Registration
 
 Before using UnderFire, you need to obtain a `client_id` and `user_id` from Gracenote as described below.
@@ -66,7 +67,40 @@ Look up "Armed Forces", fetch its cover art, and save it as "armed-forces.jpg in
 under-fire album -t "Armed Forces" | grep url | awk '{ print $2 }' | xargs under-fire cover -f "armed-forces.jpg" -u
 
 ```
+For more information:
 
-More documentation in the next few days.
+```
+under-fire -h
 
+```
+
+### Programming API
+
+If you're familiar with the Gracenote API, you'll note that I have renamed their commands, to make it easier to differentiate between them and to stay with idiomatic Ruby. So, for example, Gracenote's "ALBUM_SEARCH" is called `find_album`.
+
+```ruby
+
+require 'under_fire/client'
+
+# First, get a client instance
+client = UnderFire::Client.new
+
+# Search by track title
+client.find_album(:track_title => 'Paranoid Android')
+
+# or use either SINGLE_BEST or SINGLE_BEST_COVER
+# SINGLE_BEST: returns the single best result as decided by Gracenote.
+# SINGLE_BEST_COVER: same as above, but also returns cover URL. Currently this is the default.
+
+album = client.find_album(:track_title => 'Paranoid Android', :mode => 'SINGLE_BEST')
+
+# use query response to fetch the album cover.
+client.fetch_cover(album, "OK_Computer_cover.jpg")
+
+# The following searches by Gracenote album id or track id:
+album = client.fetch_album(:gn_id => '86372321-2C7F28ADC369EB90E53A7F6CA3A70D56')
+
+# If you want to limit your response to one album, use one of the two modes described above.
+
+```
 
