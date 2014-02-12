@@ -1,5 +1,7 @@
 # UnderFire
 
+[![Gem Version](https://badge.fury.io/rb/under_fire.png)](http://badge.fury.io/rb/under_fire)
+
 Wraps Gracenote's Web API in Ruby goodness. UnderFire provides two interfaces: a client to use from your projects and a command line interface.
 
 ## Installation
