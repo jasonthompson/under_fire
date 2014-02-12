@@ -105,7 +105,7 @@ gem install cdtoc
 Then:
 
 ```
-  $ cdtoc | xargs under-fire -o
+cdtoc | xargs under-fire toc -o
 
 ```
 
