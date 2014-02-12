@@ -93,6 +93,19 @@ For more information:
 under-fire -h
 
 ```
+If you want to search by a cd's table of contents, you need to provide the offset for each track on a given CD. To make things easy, I wrote a little gem called `cdtoc`. Just install this in the usual way:
+
+```
+gem install cdtoc
+
+```
+
+Then:
+
+```
+  $ cdtoc | xargs under-fire -o
+
+```
 
 ### Programming API
 
