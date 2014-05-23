@@ -27,7 +27,7 @@ module UnderFire
       it "returns the correct query" do
         subject.query.must_include "182 "
         subject.query.must_include "98702 "
-        subject.query.must_include 'cmd="ALBUM_TOC"'
+        subject.query.must_include 'CMD="ALBUM_TOC"'
         subject.query.must_include "SINGLE_BEST_COVER"
       end
     end
