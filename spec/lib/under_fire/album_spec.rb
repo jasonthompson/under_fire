@@ -1,6 +1,7 @@
 require_relative '../../spec_helper'
 require 'under_fire/album'
 require 'json'
+require 'ostruct'
 
 module UnderFire
   describe Album do
@@ -47,7 +48,7 @@ module UnderFire
 
     describe 'track_count' do
       it 'returns the correct track count' do
-        subject.track_count.must_equal 9 
+        subject.track_count.must_equal 9
       end
     end
 
@@ -57,7 +58,16 @@ module UnderFire
       end
 
       it 'must have the correct number of tracks' do
-        subject.tracks.count.must_equal 9
+        subject.tracks.count.must_equal subject.track_count 
+      end
+    end
+
+    describe '#get_track' do
+      it 'returns track by album track number' do
+        track_five = {:track_num => "5",
+                      :gn_id     => "3843674-5020FA6C0AD103AF757FC8F4DE56F179",
+                      :title     => "Money"}
+        subject.get_track(5).must_equal track_five
       end
     end
   end
