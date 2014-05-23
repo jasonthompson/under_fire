@@ -25,7 +25,7 @@ module UnderFire
     # @return [Array] list of tracks
     attr_reader :tracks
 
-    def initialize(album_info, track_klass = Track)
+    def initialize(album_info, track_klass=Track)
       @album_info = album_info[:responses][:response][:album]
       @title = @album_info[:title]
       @gn_id = @album_info[:gn_id]
@@ -34,11 +34,27 @@ module UnderFire
       @date = Date.new(@album_info[:date].to_i)
       @track_count = @album_info[:track_count].to_i
       @pkg_lang = @album_info[:pkg_lang]
-      @tracks = @album_info[:track]
+      @tracks = []
+
+      add_tracks(@album_info[:track], track_klass)
     end
 
-    def get_track(track_number)
-      tracks[track_number - 1]
+    def get_track(id_or_name)
+      track = nil
+      if id_or_name.respond_to? :-
+        track = tracks[id_or_name -1]
+      else
+        track = tracks.find {|t| t.title.downcase == id_or_name.downcase}
+      end
+      track
+    end
+
+    private
+
+    def add_tracks(track_list, track_klass)
+      track_list.each do |t|
+        tracks << track_klass.new(t)
+      end
     end
   end
 end

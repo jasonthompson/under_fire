@@ -8,7 +8,7 @@ module UnderFire
     path = "../../../fixtures/album_response.json"
     file = File.open(File.expand_path(path, __FILE__))
     album_info = JSON.parse(file.read, opts = {:symbolize_names => true})
-    subject{Album.new(album_info)}
+    subject{Album.new(album_info, OpenStruct)}
 
     describe '#title' do
       it 'returns album title' do
@@ -58,16 +58,17 @@ module UnderFire
       end
 
       it 'must have the correct number of tracks' do
-        subject.tracks.count.must_equal subject.track_count 
+        subject.tracks.count.must_equal subject.track_count
       end
     end
 
     describe '#get_track' do
       it 'returns track by album track number' do
-        track_five = {:track_num => "5",
-                      :gn_id     => "3843674-5020FA6C0AD103AF757FC8F4DE56F179",
-                      :title     => "Money"}
-        subject.get_track(5).must_equal track_five
+        subject.get_track(5).title.must_equal 'Money'
+      end
+
+      it 'returns track by name' do
+        subject.get_track('Money').title.must_equal 'Money'
       end
     end
   end
