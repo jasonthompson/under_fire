@@ -6,16 +6,17 @@ module UnderFire
     let(:base_dir){File.expand_path(__FILE__ + "/../../..")}
     let(:config_file){File.join(base_dir, 'fixtures/.ufrc')}
 
-    before do
-      ENV["GRACENOTE_USER_ID"] = "12354534"
-      ENV["GRACENOTE_CLIENT_ID"] = "1252545-34543523452345"
-     end
 
-    after do
-      Configuration.instance.reset
-    end
 
     describe "a completed configuration" do
+      before do
+        ENV["GRACENOTE_USER_ID"] = "12354534"
+        ENV["GRACENOTE_CLIENT_ID"] = "1252545-34543523452345"
+      end
+
+      after do
+        Configuration.instance.reset
+      end
 
       it "has a client_id" do
         config = Configuration.instance
@@ -32,6 +33,12 @@ module UnderFire
       before do
         ENV["GRACENOTE_CLIENT_ID"] = ""
         ENV["GRACENOTE_USER_ID"] = ""
+      end
+
+      after do
+        ENV["GRACENOTE_USER_ID"] = "12354534"
+        ENV["GRACENOTE_CLIENT_ID"] = "1252545-34543523452345"
+        Configuration.instance.reset
       end
 
       describe "#configured?" do
